@@ -1,103 +1,103 @@
-tool
+@tool
 extends Control
 
 var vpainter
 #LOCAL COPY BUTTON
-export var local_copy_button_path:NodePath
-var local_copy_button:ToolButton
+@export var local_copy_button_path:NodePath
+var local_copy_button:Button
 
 #COLOR PICKER:
-export var color_picker_dir:NodePath
+@export var color_picker_dir:NodePath
 var color_picker:ColorPickerButton
 
-export var background_picker_dir:NodePath
+@export var background_picker_dir:NodePath
 var background_picker:ColorPickerButton
 
 #PEN PRESSURE:
-export var pen_pressure_settings_dir:NodePath
+@export var pen_pressure_settings_dir:NodePath
 var pen_pressure_settings:VBoxContainer
-export var button_opacity_pressure_dir:NodePath
+@export var button_opacity_pressure_dir:NodePath
 var button_opacity_pressure:CheckBox
-export var button_size_pressure_dir:NodePath
+@export var button_size_pressure_dir:NodePath
 var button_size_pressure:CheckBox
 
 #TOOLS:
-export var button_paint_dir:NodePath
-var button_paint:ToolButton
+@export var button_paint_dir:NodePath
+var button_paint:Button
 
-export var button_sample_dir:NodePath
-var button_sample:ToolButton
+@export var button_sample_dir:NodePath
+var button_sample:Button
 
-export var button_blur_dir:NodePath
-var button_blur:ToolButton
+@export var button_blur_dir:NodePath
+var button_blur:Button
 
-export var button_displace_dir:NodePath
-var button_displace:ToolButton
+@export var button_displace_dir:NodePath
+var button_displace:Button
 
-export var button_fill_dir:NodePath
-var button_fill:ToolButton
+@export var button_fill_dir:NodePath
+var button_fill:Button
 
 #BRUSH SLIDERS:
-export var brush_size_slider_dir:NodePath
+@export var brush_size_slider_dir:NodePath
 var brush_size_slider:HSlider
 
-export var brush_opacity_slider_dir:NodePath
+@export var brush_opacity_slider_dir:NodePath
 var brush_opacity_slider:HSlider
 
-export var brush_hardness_slider_dir:NodePath
+@export var brush_hardness_slider_dir:NodePath
 var brush_hardness_slider:HSlider
 
-export var brush_spacing_slider_dir:NodePath
+@export var brush_spacing_slider_dir:NodePath
 var brush_spacing_slider:HSlider
 
 #BLENDING MODES:
-export var blend_modes_path:NodePath
+@export var blend_modes_path:NodePath
 var blend_modes:OptionButton
 
 func _enter_tree():
 	local_copy_button = get_node(local_copy_button_path)
-	local_copy_button.connect("button_down", self, "_make_local_copy")
+	local_copy_button.connect("button_down", self._make_local_copy)
 	
 	color_picker = get_node(color_picker_dir)
-	color_picker.connect("color_changed", self, "_set_paint_color")
+	color_picker.connect("color_changed", self._set_paint_color)
 	
 	background_picker = get_node(background_picker_dir)
-	background_picker.connect("color_changed", self, "_set_background_color")
+	background_picker.connect("color_changed", self._set_background_color)
 	
 	
 	pen_pressure_settings = get_node(pen_pressure_settings_dir)
 	
 	button_opacity_pressure = get_node(button_opacity_pressure_dir)
-	button_opacity_pressure.connect("toggled", self, "_set_opacity_pressure")
+	button_opacity_pressure.connect("toggled", self._set_opacity_pressure)
 	button_size_pressure = get_node(button_size_pressure_dir)
-	button_size_pressure.connect("toggled", self, "_set_size_pressure")
+	button_size_pressure.connect("toggled", self._set_size_pressure)
 	
 	button_paint = get_node(button_paint_dir)
-	button_paint.connect("toggled", self, "_set_paint_tool")
+	button_paint.connect("toggled", self._set_paint_tool)
 	
 	button_sample = get_node(button_sample_dir)
-	button_sample.connect("toggled", self, "_set_sample_tool")
+	button_sample.connect("toggled", self._set_sample_tool)
 	
 	button_blur = get_node(button_blur_dir)
-	button_blur.connect("toggled", self, "_set_blur_tool")
+	button_blur.connect("toggled", self._set_blur_tool)
 	
 	button_displace = get_node(button_displace_dir)
-	button_displace.connect("toggled", self, "_set_displace_tool")
+	button_displace.connect("toggled", self._set_displace_tool)
 	
 	button_fill = get_node(button_fill_dir)
-	button_fill.connect("toggled", self, "_set_fill_tool")
+	button_fill.connect("toggled", self._set_fill_tool)
 
 	brush_size_slider = get_node(brush_size_slider_dir)
-	brush_size_slider.connect("value_changed", self, "_set_brush_size")
+	brush_size_slider.connect("value_changed", self._set_brush_size)
 	brush_opacity_slider = get_node(brush_opacity_slider_dir)
-	brush_opacity_slider.connect("value_changed", self, "_set_brush_opacity")
+	brush_opacity_slider.connect("value_changed", self._set_brush_opacity)
 	brush_hardness_slider = get_node(brush_hardness_slider_dir)
-	brush_hardness_slider.connect("value_changed", self, "_set_brush_hardness")
+	brush_hardness_slider.connect("value_changed", self._set_brush_hardness)
 	brush_spacing_slider = get_node(brush_spacing_slider_dir)
-	brush_spacing_slider.connect("value_changed", self, "_set_brush_spacing")
+	brush_spacing_slider.connect("value_changed", self._set_brush_spacing)
 	
 	blend_modes = get_node(blend_modes_path)
-	blend_modes.connect("item_selected", self, "_set_blend_mode")
+	blend_modes.connect("item_selected", self._set_blend_mode)
 	blend_modes.clear()
 	blend_modes.add_item("MIX", 0)
 	blend_modes.add_item("ADD", 1)
@@ -106,6 +106,10 @@ func _enter_tree():
 	blend_modes.add_item("DIVIDE", 4)
 
 	button_paint.set_pressed(true)
+	
+	for b in %ColorSwatchPresets.get_children():
+		b.pressed.connect(_set_paint_color.bind(b.modulate))
+	
 
 func _exit_tree():
 	pass
@@ -139,25 +143,25 @@ func _set_blend_mode(id):
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_1:
+		if event.keycode == KEY_1:
 			_set_paint_tool(true)
-		if event.scancode == KEY_2:
+		if event.keycode == KEY_2:
 			_set_sample_tool(true)
-		if event.scancode == KEY_3:
+		if event.keycode == KEY_3:
 			_set_blur_tool(true)
-		if event.scancode == KEY_4:
+		if event.keycode == KEY_4:
 			_set_displace_tool(true)
-		if event.scancode == KEY_5:
+		if event.keycode == KEY_5:
 			_set_fill_tool(true)
 		
-		if event.scancode == KEY_BRACELEFT:
+		if event.keycode == KEY_BRACELEFT:
 			_set_brush_size(brush_size_slider.value - 0.05)
-		if event.scancode == KEY_BRACERIGHT:
+		if event.keycode == KEY_BRACERIGHT:
 			_set_brush_size(brush_size_slider.value + 0.05)
 		
-		if event.scancode == KEY_APOSTROPHE :
+		if event.keycode == KEY_APOSTROPHE :
 			_set_brush_opacity(brush_opacity_slider.value - 0.01)
-		if event.scancode == KEY_BACKSLASH :
+		if event.keycode == KEY_BACKSLASH :
 			_set_brush_opacity(brush_opacity_slider.value + 0.01)
 
 func _set_opacity_pressure(value):
@@ -244,4 +248,3 @@ func _set_brush_hardness(value):
 func _set_brush_spacing(value):
 	brush_spacing_slider.value = value
 	vpainter.brush_spacing = value
-

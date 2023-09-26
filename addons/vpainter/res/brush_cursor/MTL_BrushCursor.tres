@@ -1,7 +1,7 @@
-[gd_resource type="SpatialMaterial" format=2]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cai48oics0s5f"]
 
 [resource]
-flags_unshaded = true
-flags_do_not_receive_shadows = true
-params_blend_mode = 1
-albedo_color = Color( 0.196078, 0.196078, 0.196078, 1 )
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(0.219608, 0.231373, 0.4, 1)
+disable_receive_shadows = true
