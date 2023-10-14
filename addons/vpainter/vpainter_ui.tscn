@@ -1,118 +1,86 @@
 [gd_scene load_steps=13 format=3 uid="uid://6xvarlmj2wkk"]
 
-[ext_resource type="Script" path="res://addons/VPainter/vpainter_ui.gd" id="1_epro4"]
-[ext_resource type="Texture2D" uid="uid://duanqmgnxdcv4" path="res://addons/VPainter/res/icons/icon_fill.svg" id="2"]
-[ext_resource type="Texture2D" uid="uid://cfmd6uoamd8f7" path="res://addons/VPainter/res/icons/icon_blur.svg" id="3"]
-[ext_resource type="Texture2D" uid="uid://xoorvy12mjeq" path="res://addons/VPainter/res/icons/icon_brush.svg" id="4"]
-[ext_resource type="Texture2D" uid="uid://bcv33tjiro5ae" path="res://addons/VPainter/res/icons/icon_pick.svg" id="5"]
-[ext_resource type="Texture2D" uid="uid://bdghfff4yr7ov" path="res://addons/VPainter/res/icons/icon_displace.svg" id="6"]
-[ext_resource type="Texture2D" uid="uid://c5sdq0sls61ji" path="res://addons/VPainter/res/icons/icon_duplicate.svg" id="10"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sp5d3"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ubdj2"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qp0bf"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdjsx"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttbjm"]
-bg_color = Color(1, 1, 1, 1)
+[ext_resource type="Script" path="res://addons/vpainter/vpainter_ui.gd" id="1_mjjor"]
+[ext_resource type="Texture2D" uid="uid://duanqmgnxdcv4" path="res://addons/vpainter/res/icons/icon_fill.svg" id="2"]
+[ext_resource type="Texture2D" uid="uid://cfmd6uoamd8f7" path="res://addons/vpainter/res/icons/icon_blur.svg" id="3"]
+[ext_resource type="Texture2D" uid="uid://xoorvy12mjeq" path="res://addons/vpainter/res/icons/icon_brush.svg" id="4"]
+[ext_resource type="Texture2D" uid="uid://bcv33tjiro5ae" path="res://addons/vpainter/res/icons/icon_pick.svg" id="5"]
+[ext_resource type="Texture2D" uid="uid://bdghfff4yr7ov" path="res://addons/vpainter/res/icons/icon_displace.svg" id="6"]
+[ext_resource type="StyleBox" uid="uid://c3cpe2uf4xf13" path="res://addons/vpainter/vpainter_colorbox_style.tres" id="7_fgre5"]
+[ext_resource type="Texture2D" uid="uid://bj1ijgxgv86ct" path="res://addons/vpainter/res/icons/icon_flip.svg" id="7_fwiam"]
+[ext_resource type="StyleBox" uid="uid://8cmidpul6ghq" path="res://addons/vpainter/vpainter_mode_button_pressed_style.tres" id="8_2rexh"]
+[ext_resource type="Texture2D" uid="uid://wft6u73g5s7n" path="res://addons/vpainter/res/icons/icon_make_mesh.svg" id="9_8amgy"]
+[ext_resource type="Texture2D" uid="uid://c5sdq0sls61ji" path="res://addons/vpainter/res/icons/icon_duplicate.svg" id="10"]
+[ext_resource type="Texture2D" uid="uid://cbwemoa53sx4x" path="res://addons/vpainter/res/icons/icon_preview.svg" id="11_6f4dc"]
 
 [node name="ui" type="Control"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(176, 0)
 layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 150.0
-offset_bottom = -1080.0
+offset_top = -216.0
+offset_right = 166.0
+offset_bottom = -205.0
 grow_vertical = 2
-script = ExtResource("1_epro4")
-local_copy_button_path = NodePath("MarginContainer/MainArea/DuplicateButton")
-color_picker_dir = NodePath("MarginContainer/MainArea/ColorSwatches/PrimaryColor/ColorPickerButton")
-background_picker_dir = NodePath("MarginContainer/MainArea/ColorSwatches/PrimaryColor2/ColorPickerButton2")
-pen_pressure_settings_dir = NodePath("MarginContainer/MainArea/PenPressureSettings")
-button_opacity_pressure_dir = NodePath("MarginContainer/MainArea/PenPressureSettings/BtnOpacityPressure")
-button_size_pressure_dir = NodePath("MarginContainer/MainArea/PenPressureSettings/BtnSizePressure")
-button_paint_dir = NodePath("MarginContainer/MainArea/Tools_1/BtnBrush")
-button_sample_dir = NodePath("MarginContainer/MainArea/Tools_1/BtnSample")
-button_blur_dir = NodePath("MarginContainer/MainArea/Tools_1/BtnBlur")
-button_displace_dir = NodePath("MarginContainer/MainArea/Tools_2/BtnDisplace")
-button_fill_dir = NodePath("MarginContainer/MainArea/Tools_2/BtnFill")
-brush_size_slider_dir = NodePath("MarginContainer/MainArea/Sliders/Size")
-brush_opacity_slider_dir = NodePath("MarginContainer/MainArea/Sliders/Opacity")
-brush_hardness_slider_dir = NodePath("MarginContainer/MainArea/Sliders/Hardness")
-brush_spacing_slider_dir = NodePath("MarginContainer/MainArea/Sliders/Spacing")
-blend_modes_path = NodePath("MarginContainer/MainArea/BlendModes")
+script = ExtResource("1_mjjor")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-offset_right = 162.0
-offset_bottom = 445.0
+layout_mode = 2
+offset_right = 176.0
+offset_bottom = 659.0
 
 [node name="MainArea" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Tools_1" type="HBoxContainer" parent="MarginContainer/MainArea"]
+[node name="ToolLabel" type="Label" parent="MarginContainer/MainArea"]
 layout_mode = 2
+text = "Tools"
+horizontal_alignment = 1
+
+[node name="ToolBox" type="HBoxContainer" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 
-[node name="BtnBrush" type="Button" parent="MarginContainer/MainArea/Tools_1"]
+[node name="PaintButton" type="Button" parent="MarginContainer/MainArea/ToolBox"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Brush"
 toggle_mode = true
 button_pressed = true
 icon = ExtResource("4")
 
-[node name="BtnSample" type="Button" parent="MarginContainer/MainArea/Tools_1"]
-layout_mode = 2
-tooltip_text = "Sample (Color Picker)"
-toggle_mode = true
-icon = ExtResource("5")
-
-[node name="BtnBlur" type="Button" parent="MarginContainer/MainArea/Tools_1"]
-layout_mode = 2
-tooltip_text = "Blur"
-toggle_mode = true
-icon = ExtResource("3")
-
-[node name="Tools_2" type="HBoxContainer" parent="MarginContainer/MainArea"]
-layout_mode = 2
-alignment = 1
-
-[node name="BtnDisplace" type="Button" parent="MarginContainer/MainArea/Tools_2"]
-layout_mode = 2
-tooltip_text = "Displace"
-toggle_mode = true
-icon = ExtResource("6")
-
-[node name="BtnFill" type="Button" parent="MarginContainer/MainArea/Tools_2"]
+[node name="FillButton" type="Button" parent="MarginContainer/MainArea/ToolBox"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Fill"
 toggle_mode = true
 icon = ExtResource("2")
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/MainArea"]
+[node name="SampleButton" type="Button" parent="MarginContainer/MainArea/ToolBox"]
+unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Sample (Color Picker)"
+toggle_mode = true
+icon = ExtResource("5")
 
-[node name="PenPressureSettings" type="VBoxContainer" parent="MarginContainer/MainArea"]
+[node name="BlurButton" type="Button" parent="MarginContainer/MainArea/ToolBox"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
-size_flags_horizontal = 0
-alignment = 2
+tooltip_text = "Blur"
+toggle_mode = true
+icon = ExtResource("3")
 
-[node name="BtnSizePressure" type="CheckBox" parent="MarginContainer/MainArea/PenPressureSettings"]
+[node name="DisplaceButton" type="Button" parent="MarginContainer/MainArea/ToolBox"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 5
-text = "Size Pressure"
-
-[node name="BtnOpacityPressure" type="CheckBox" parent="MarginContainer/MainArea/PenPressureSettings"]
-layout_mode = 2
-size_flags_horizontal = 5
-text = "OpacityPressure"
+tooltip_text = "Displace"
+toggle_mode = true
+icon = ExtResource("6")
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/MainArea"]
 layout_mode = 2
@@ -122,138 +90,222 @@ layout_mode = 2
 text = "Tool Colors"
 horizontal_alignment = 1
 
-[node name="ColorSwatches" type="HBoxContainer" parent="MarginContainer/MainArea"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainArea"]
 layout_mode = 2
 alignment = 1
 
-[node name="PrimaryColor" type="VBoxContainer" parent="MarginContainer/MainArea/ColorSwatches"]
-layout_mode = 2
-size_flags_horizontal = 6
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="MarginContainer/MainArea/ColorSwatches/PrimaryColor"]
-custom_minimum_size = Vector2(50, 50)
+[node name="FlipColors" type="Button" parent="MarginContainer/MainArea/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28.12, 46)
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Flip Brush and Eraser colors.
+Shortcut: 'x'"
+theme_override_font_sizes/font_size = 24
+icon = ExtResource("7_fwiam")
+flat = true
+expand_icon = true
+
+[node name="ColorSwatches" type="GridContainer" parent="MarginContainer/MainArea/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 2
+
+[node name="PrimaryColorPicker" type="ColorPickerButton" parent="MarginContainer/MainArea/HBoxContainer/ColorSwatches"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 32)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 flat = true
 
-[node name="Label" type="Label" parent="MarginContainer/MainArea/ColorSwatches/PrimaryColor"]
+[node name="Label" type="Label" parent="MarginContainer/MainArea/HBoxContainer/ColorSwatches"]
 layout_mode = 2
-text = "brush"
+text = "Paint"
 
-[node name="PrimaryColor2" type="VBoxContainer" parent="MarginContainer/MainArea/ColorSwatches"]
-layout_mode = 2
-size_flags_horizontal = 6
-
-[node name="ColorPickerButton2" type="ColorPickerButton" parent="MarginContainer/MainArea/ColorSwatches/PrimaryColor2"]
-custom_minimum_size = Vector2(50, 50)
+[node name="SecondaryColorPicker" type="ColorPickerButton" parent="MarginContainer/MainArea/HBoxContainer/ColorSwatches"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 32)
 layout_mode = 2
 size_flags_vertical = 4
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 flat = true
 color = Color(1, 1, 1, 1)
 
-[node name="Label" type="Label" parent="MarginContainer/MainArea/ColorSwatches/PrimaryColor2"]
+[node name="Label2" type="Label" parent="MarginContainer/MainArea/HBoxContainer/ColorSwatches"]
 layout_mode = 2
-text = "eraser"
-
-[node name="HSeparator3" type="HSeparator" parent="MarginContainer/MainArea"]
-layout_mode = 2
+text = "+Ctrl"
 
 [node name="Label" type="Label" parent="MarginContainer/MainArea"]
 layout_mode = 2
-text = "Color Presets"
+text = "Presets"
 horizontal_alignment = 1
 
-[node name="ColorSwatchPresets" type="HBoxContainer" parent="MarginContainer/MainArea"]
+[node name="ColorPresetsContainer" type="HBoxContainer" parent="MarginContainer/MainArea"]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="PresetWhite" type="Button" parent="MarginContainer/MainArea/ColorSwatchPresets"]
-custom_minimum_size = Vector2(24, 24)
+[node name="PresetWhite" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_sp5d3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ubdj2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qp0bf")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_rdjsx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ttbjm")
+tooltip_text = "Shortcut: '5'"
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 
-[node name="PresetBlack" type="Button" parent="MarginContainer/MainArea/ColorSwatchPresets"]
+[node name="PresetBlack" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
+unique_name_in_owner = true
 modulate = Color(0, 0, 0, 1)
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_sp5d3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ubdj2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qp0bf")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_rdjsx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ttbjm")
+tooltip_text = "Shortcut: '4'"
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 
-[node name="PresetRed" type="Button" parent="MarginContainer/MainArea/ColorSwatchPresets"]
+[node name="PresetRed" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
+unique_name_in_owner = true
 modulate = Color(1, 0, 0, 1)
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_sp5d3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ubdj2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qp0bf")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_rdjsx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ttbjm")
+tooltip_text = "Shortcut: '1'"
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 
-[node name="PresetGreen" type="Button" parent="MarginContainer/MainArea/ColorSwatchPresets"]
+[node name="PresetGreen" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
+unique_name_in_owner = true
 modulate = Color(0, 1, 0, 1)
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_sp5d3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ubdj2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qp0bf")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_rdjsx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ttbjm")
+tooltip_text = "Shortcut: '2'"
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 
-[node name="PresetBlue" type="Button" parent="MarginContainer/MainArea/ColorSwatchPresets"]
+[node name="PresetBlue" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
+unique_name_in_owner = true
 modulate = Color(0, 0, 1, 1)
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_sp5d3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ubdj2")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qp0bf")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_rdjsx")
-theme_override_styles/focus = SubResource("StyleBoxFlat_ttbjm")
+tooltip_text = "Shortcut: '3'"
+theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
 
-[node name="HSeparator4" type="HSeparator" parent="MarginContainer/MainArea"]
+[node name="BlendModeSeparator" type="HSeparator" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="BlendModesLabel" type="Label" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Blend Mode"
 horizontal_alignment = 1
 
-[node name="BlendModes" type="OptionButton" parent="MarginContainer/MainArea"]
+[node name="BlendModeContainer" type="HBoxContainer" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 4
-item_count = 5
-selected = 0
-popup/item_0/text = "MIX"
-popup/item_0/id = 0
-popup/item_1/text = "ADD"
-popup/item_1/id = 1
-popup/item_2/text = "SUBTRACT"
-popup/item_2/id = 2
-popup/item_3/text = "MULTIPLY"
-popup/item_3/id = 3
-popup/item_4/text = "DIVIDE"
-popup/item_4/id = 4
+alignment = 1
+
+[node name="ModeMixButton" type="Button" parent="MarginContainer/MainArea/BlendModeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Mix"
+theme_override_styles/pressed = ExtResource("8_2rexh")
+toggle_mode = true
+button_pressed = true
+text = "M"
+
+[node name="ModeAddButton" type="Button" parent="MarginContainer/MainArea/BlendModeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Add"
+theme_override_styles/pressed = ExtResource("8_2rexh")
+toggle_mode = true
+text = "+"
+
+[node name="ModeSubstractButton" type="Button" parent="MarginContainer/MainArea/BlendModeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Substract"
+theme_override_styles/pressed = ExtResource("8_2rexh")
+toggle_mode = true
+text = "-"
+
+[node name="ModeMultiplyButton" type="Button" parent="MarginContainer/MainArea/BlendModeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Multiply"
+theme_override_styles/pressed = ExtResource("8_2rexh")
+toggle_mode = true
+text = "*"
+
+[node name="ModeDivideButton" type="Button" parent="MarginContainer/MainArea/BlendModeContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Divide"
+theme_override_styles/pressed = ExtResource("8_2rexh")
+toggle_mode = true
+text = "/"
 
 [node name="HSeparator5" type="HSeparator" parent="MarginContainer/MainArea"]
 layout_mode = 2
 
 [node name="Sliders" type="VBoxContainer" parent="MarginContainer/MainArea"]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 0
 alignment = 1
 
-[node name="LSize" type="Label" parent="MarginContainer/MainArea/Sliders"]
+[node name="BlendModesLabel2" type="Label" parent="MarginContainer/MainArea/Sliders"]
+layout_mode = 2
+text = "Brush Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainArea/Sliders"]
+layout_mode = 2
+
+[node name="LSize" type="Label" parent="MarginContainer/MainArea/Sliders/HBoxContainer"]
 layout_mode = 2
 text = "size:"
 
-[node name="Size" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+[node name="BtnSizePressure" type="CheckBox" parent="MarginContainer/MainArea/Sliders/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Use Pressure for Size"
+text = "Pressure"
+alignment = 2
+
+[node name="SizeSlider" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 0.001
@@ -261,11 +313,23 @@ max_value = 10.0
 step = 0.001
 value = 1.0
 
-[node name="LOpacity" type="Label" parent="MarginContainer/MainArea/Sliders"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MainArea/Sliders"]
+layout_mode = 2
+
+[node name="LOpacity" type="Label" parent="MarginContainer/MainArea/Sliders/HBoxContainer2"]
 layout_mode = 2
 text = "opacity:"
 
-[node name="Opacity" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+[node name="BtnOpacityPressure" type="CheckBox" parent="MarginContainer/MainArea/Sliders/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Use Pressure for Opacity"
+text = "Pressure"
+alignment = 2
+
+[node name="OpacitySlider" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 0.001
@@ -277,7 +341,8 @@ value = 0.5
 layout_mode = 2
 text = "hardness:"
 
-[node name="Hardness" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+[node name="HardnessSlider" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 0.001
@@ -289,7 +354,8 @@ value = 0.5
 layout_mode = 2
 text = "spacing:"
 
-[node name="Spacing" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+[node name="SpacingSlider" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 0.01
@@ -297,11 +363,60 @@ max_value = 1.0
 step = 0.01
 value = 0.1
 
+[node name="LRandomize" type="Label" parent="MarginContainer/MainArea/Sliders"]
+layout_mode = 2
+text = "randomize:"
+
+[node name="RandomizeSlider" type="HSlider" parent="MarginContainer/MainArea/Sliders"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
 [node name="HSeparator6" type="HSeparator" parent="MarginContainer/MainArea"]
 layout_mode = 2
 
 [node name="DuplicateButton" type="Button" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Makes the Mesh Unique"
 text = "Duplicate Mesh"
 icon = ExtResource("10")
+metadata/_edit_layout_mode = 1
+
+[node name="ApplyPreviewMat" type="Button" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Show Preview Material"
+text = "Preview Mat"
+icon = ExtResource("11_6f4dc")
+metadata/_edit_layout_mode = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/MainArea"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Shortcuts:
+X: flip colors
+D: reset to black and white
+1-5: preset colors"
+
+[node name="ConversionTool" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ConversionLabel" type="Label" parent="MarginContainer/ConversionTool"]
+layout_mode = 2
+text = "This MeshInstance3D is not using an 'ArrayMesh' as a mesh.
+
+You need to convert it to an 'ArrayMesh' to be able to vertex paint on it."
+autowrap_mode = 2
+
+[node name="PrimitiveToMeshButton" type="Button" parent="MarginContainer/ConversionTool"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Convert to ArrayMesh"
+text = "Convert to Mesh"
+icon = ExtResource("9_8amgy")
 metadata/_edit_layout_mode = 1

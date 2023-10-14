@@ -15,7 +15,11 @@ var edit_mode:bool:
 		else:
 			ui_sidebar.hide()
 			_delete_collision()
+
 var paint_color:Color
+var paint_color_secondary:Color
+var original_mat_override:Material
+var preview_active := false
 
 enum {MIX, ADD, SUBTRACT, MULTIPLY, DIVIDE}
 var blend_mode = MIX
@@ -24,7 +28,6 @@ enum {STANDART, INFLATE, MOVE, SMOOTH}
 var sculpt_mode = STANDART
 
 var current_tool = "_paint_tool"
-
 
 var invert_brush = false
 
@@ -42,6 +45,7 @@ var calculated_opacity:float = 0.0
 
 var brush_hardness:float = 0.5
 var brush_spacing:float = 0.1
+var brush_random:float = 0.0
 
 var current_mesh:MeshInstance3D
 var editable_object:bool = false
@@ -49,7 +53,6 @@ var editable_object:bool = false
 var raycast_hit:bool = false
 var hit_position
 var hit_normal
-
 
 
 func _handles(obj) -> bool:
@@ -83,7 +86,7 @@ func _user_input(event) -> bool:
 			_set_collision()
 			return false
 
-	if event is InputEventKey and event.key_code == KEY_CTRL:
+	if event is InputEventKey and event.physical_keycode == KEY_CTRL:
 		if event.is_pressed():
 			invert_brush = true
 			return false
@@ -144,26 +147,28 @@ func _raycast(camera:Node, event:InputEvent) -> void:
 func _paint_tool() -> void:
 		var data = MeshDataTool.new()
 		data.create_from_surface(current_mesh.mesh, 0)
-
+		
+		var use_color : Color = paint_color if not invert_brush else paint_color_secondary
+		
 		for i in range(data.get_vertex_count()):
 			var vertex = current_mesh.to_global(data.get_vertex(i))
 			var vertex_distance:float = vertex.distance_to(hit_position)
-
+			
 			if vertex_distance < calculated_size/2:
 				var linear_distance = 1 - (vertex_distance / (calculated_size/2))
 				var calculated_hardness = linear_distance * brush_hardness
-
+				var power = calculated_opacity * calculated_hardness * lerp(1.0, randf(), brush_random)
 				match blend_mode:
 					MIX:
-						data.set_vertex_color(i, data.get_vertex_color(i).lerp(paint_color, calculated_opacity * calculated_hardness))
+						data.set_vertex_color(i, data.get_vertex_color(i).lerp(use_color, power))
 					ADD:
-						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) + paint_color, calculated_opacity * calculated_hardness))
+						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) + use_color, power))
 					SUBTRACT:
-						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) - paint_color, calculated_opacity * calculated_hardness))
+						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) - use_color, power))
 					MULTIPLY:
-						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) * paint_color, calculated_opacity * calculated_hardness))
+						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) * use_color, power))
 					DIVIDE:
-						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) / paint_color, calculated_opacity * calculated_hardness))
+						data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) / use_color, power))
 
 		current_mesh.mesh.clear_surfaces()
 		data.commit_to_surface(current_mesh.mesh)
@@ -179,11 +184,12 @@ func _displace_tool() -> void:
 			if vertex_distance < calculated_size/2:
 				var linear_distance = 1 - (vertex_distance / (calculated_size/2))
 				var calculated_hardness = linear_distance * brush_hardness
+				var power = hit_normal * calculated_opacity * calculated_hardness * 0.3 * lerp(1.0, randf(), brush_random)
 
 				if !invert_brush:
-					data.set_vertex(i, data.get_vertex(i) + hit_normal * calculated_opacity * calculated_hardness)
+					data.set_vertex(i, data.get_vertex(i) + power)
 				else:
-					data.set_vertex(i, data.get_vertex(i) - hit_normal * calculated_opacity * calculated_hardness)
+					data.set_vertex(i, data.get_vertex(i) - power)
 
 		current_mesh.mesh.clear_surfaces()
 		data.commit_to_surface(current_mesh.mesh)
@@ -195,24 +201,27 @@ func _fill_tool() -> void:
 	var data = MeshDataTool.new()
 	data.create_from_surface(current_mesh.mesh, 0)
 	
+	var use_color : Color = paint_color if not invert_brush else paint_color_secondary
+	
 	for i in range(data.get_vertex_count()):
 		var vertex = data.get_vertex(i)
 		
 		match blend_mode:
 			MIX:
-				data.set_vertex_color(i, data.get_vertex_color(i).lerp(paint_color, brush_opacity))
+				data.set_vertex_color(i, data.get_vertex_color(i).lerp(use_color, brush_opacity * lerp(1.0, randf(), brush_random)))
 			ADD:
-				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) + paint_color, brush_opacity))
+				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) + use_color, brush_opacity * lerp(1.0, randf(), brush_random)))
 			SUBTRACT:
-				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) - paint_color, brush_opacity))
+				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) - use_color, brush_opacity * lerp(1.0, randf(), brush_random)))
 			MULTIPLY:
-				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) * paint_color, brush_opacity))
+				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) * use_color, brush_opacity * lerp(1.0, randf(), brush_random)))
 			DIVIDE:
-				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) / paint_color, brush_opacity))
+				data.set_vertex_color(i, data.get_vertex_color(i).lerp(data.get_vertex_color(i) / use_color, brush_opacity * lerp(1.0, randf(), brush_random)))
 
 	current_mesh.mesh.clear_surfaces()
 	data.commit_to_surface(current_mesh.mesh)
 	process_drawing = false
+
 
 func _sample_tool() -> void:
 	var data = MeshDataTool.new()
@@ -271,8 +280,20 @@ func _set_edit_mode(value) -> void:
 		ui_sidebar.hide()
 		_delete_collision()
 
+
 func _make_local_copy() -> void:
 	current_mesh.mesh = current_mesh.mesh.duplicate(false)
+
+
+func _convert_to_mesh() -> void:
+	var surface_tool := SurfaceTool.new()
+	surface_tool.set_color(Color.BLACK)
+	surface_tool.create_from(current_mesh.mesh.duplicate(false), 0)
+	var array_mesh := surface_tool.commit()
+	current_mesh.mesh = array_mesh
+	await(RenderingServer.frame_post_draw)
+	ui_sidebar.show_conversion(false)
+
 
 func _selection_changed() -> void:
 	ui_activate_button._set_ui_sidebar(false)
@@ -285,12 +306,35 @@ func _selection_changed() -> void:
 			ui_activate_button._hide()
 			editable_object = false
 		else:
+			if current_mesh.mesh is ArrayMesh:
+				ui_sidebar.show_conversion(false)
+			else:
+				ui_sidebar.show_conversion(true)
 			ui_activate_button._show()
 			editable_object = true
 	else:
+		reset_preview_mat()
+		current_mesh = null
 		editable_object = false
 		ui_activate_button._set_ui_sidebar(false) #HIDE THE SIDEBAR
 		ui_activate_button._hide()
+
+
+func set_preview_mat():
+	if preview_active:
+		reset_preview_mat()
+		return
+	preview_active = true
+	original_mat_override = current_mesh.material_override
+	current_mesh.material_override = preload("res://addons/vpainter/additional_resources/vertex_preview_material.material")
+
+
+func reset_preview_mat():
+	if preview_active:
+		preview_active = false
+		current_mesh.material_override = original_mat_override
+		original_mat_override = null
+
 
 func _enter_tree():
 	#SETUP THE SIDEBAR:
