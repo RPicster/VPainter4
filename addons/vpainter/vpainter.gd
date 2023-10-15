@@ -31,7 +31,6 @@ var current_tool = "_paint_tool"
 
 var invert_brush = false
 
-
 var pressure_opacity:bool = false
 var pressure_size:bool = false
 var brush_pressure:float = 0.0
@@ -56,26 +55,43 @@ var hit_normal
 
 
 func _handles(obj) -> bool:
-	return editable_object
+	return editable_object and obj is MeshInstance3D
 
 
 func _forward_3d_gui_input(camera, event) -> int:
 	if !edit_mode:
-		return 0
+		return EditorPlugin.AFTER_GUI_INPUT_PASS
 	_display_brush()
 	_calculate_brush_pressure(event)
 	_raycast(camera, event)
-
-
+	
 	if raycast_hit:
 		return int(_user_input(event)) #the returned value blocks or unblocks the default input from godot
-	else:
-		return 0
+	return EditorPlugin.AFTER_GUI_INPUT_PASS
 
+
+func _physics_process(_delta):
+	if !edit_mode:
+		return
+	if Input.is_physical_key_pressed(KEY_S):
+		if not change_size:
+			first_change_size_pos = get_viewport().get_mouse_position()
+			change_size = true
+		updated_change_size_pos = get_viewport().get_mouse_position()
+		var dist : Vector2 = (updated_change_size_pos-first_change_size_pos)*0.02
+		ui_sidebar._set_brush_size(brush_size+dist.x)
+		ui_sidebar._set_brush_opacity(brush_opacity-dist.y)
+		first_change_size_pos = get_viewport().get_mouse_position()
+	elif change_size:
+		change_size = false
+
+
+var change_size := false
+var first_change_size_pos := Vector2.ZERO
+var updated_change_size_pos := Vector2.ZERO
 func _user_input(event) -> bool:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
-#			print(current_mesh.mesh.)
 			process_drawing = true
 			_process_drawing()
 			brush_cursor.mesh.material = preload("res://addons/VPainter/res/brush_cursor/MTL_BrushCursor_painting.tres")
@@ -85,7 +101,7 @@ func _user_input(event) -> bool:
 			brush_cursor.mesh.material = preload("res://addons/VPainter/res/brush_cursor/MTL_BrushCursor.tres")
 			_set_collision()
 			return false
-
+	
 	if event is InputEventKey and event.physical_keycode == KEY_CTRL:
 		if event.is_pressed():
 			invert_brush = true
@@ -95,6 +111,7 @@ func _user_input(event) -> bool:
 			return false
 	else:
 		return false
+
 
 func _process_drawing():
 	while process_drawing:
@@ -106,6 +123,7 @@ func _display_brush() -> void:
 		brush_cursor.visible = true
 		brush_cursor.position = hit_position
 		brush_cursor.scale = Vector3.ONE * calculated_size
+		brush_cursor.transparency = remap(brush_opacity, 0.0, 1.0, 0.9, 0.3)
 	else:
 		brush_cursor.visible = false
 
@@ -297,8 +315,9 @@ func _convert_to_mesh() -> void:
 
 func _selection_changed() -> void:
 	ui_activate_button._set_ui_sidebar(false)
+	
+	var selection = EditorInterface.get_selection().get_selected_nodes()
 
-	var selection = get_editor_interface().get_selection().get_selected_nodes()
 	if selection.size() == 1 and selection[0] is MeshInstance3D:
 		current_mesh = selection[0]
 		if current_mesh.mesh == null:
@@ -308,10 +327,11 @@ func _selection_changed() -> void:
 		else:
 			if current_mesh.mesh is ArrayMesh:
 				ui_sidebar.show_conversion(false)
+				editable_object = true
 			else:
 				ui_sidebar.show_conversion(true)
+				editable_object = false
 			ui_activate_button._show()
-			editable_object = true
 	else:
 		reset_preview_mat()
 		current_mesh = null
@@ -339,17 +359,21 @@ func reset_preview_mat():
 func _enter_tree():
 	#SETUP THE SIDEBAR:
 	ui_sidebar = load("res://addons/vpainter/vpainter_ui.tscn").instantiate()
-	#ui_sidebar.hide()
 	ui_sidebar.vpainter = self
+	ui_sidebar.hide()
 	add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_SIDE_LEFT, ui_sidebar)
+	
 	#SETUP THE EDITOR BUTTON:
 	ui_activate_button = load("res://addons/vpainter/vpainter_activate_button.tscn").instantiate()
 	ui_activate_button.hide()
 	ui_activate_button.vpainter = self
 	ui_activate_button.ui_sidebar = ui_sidebar
 	add_control_to_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_MENU, ui_activate_button)
+	
 	#SELECTION SIGNAL:
-	get_editor_interface().get_selection().connect("selection_changed", self._selection_changed)
+	EditorInterface.get_selection().selection_changed.connect(_selection_changed)
+	#get_editor_interface().get_selection().connect("selection_changed", self._selection_changed)
+	
 	#LOAD BRUSH:
 	brush_cursor = preload("res://addons/vpainter/res/brush_cursor/BrushCursor.tscn").instantiate()
 	brush_cursor.visible = false

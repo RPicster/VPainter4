@@ -106,6 +106,8 @@ func _set_blend_mode(button:Button):
 
 
 func _input(event):
+	if not vpainter.edit_mode:
+		return
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_1:
 			%PresetRed.pressed.emit()
@@ -187,27 +189,32 @@ func set_tool_button(set_true_on:Control):
 
 
 func _set_brush_size(value):
+	value = clamp(value, 0.001, 10.0)
 	%SizeSlider.value = value
 	vpainter.brush_size = value
 	vpainter.brush_cursor.scale = Vector3.ONE * value
 
 
 func _set_brush_opacity(value):
+	value = clamp(value, 0.001, 1.0)
 	%OpacitySlider.value = value
 	vpainter.brush_opacity = value
 
 
 func _set_brush_hardness(value):
+	value = clamp(value, 0.001, 1.0)
 	%HardnessSlider.value = value
 	vpainter.brush_hardness = value
 
 
 func _set_brush_spacing(value):
+	value = clamp(value, 0.001, 1.0)
 	%SpacingSlider.value = value
 	vpainter.brush_spacing = value
 
 
 func _set_brush_random(value):
+	value = clamp(value, 0.001, 1.0)
 	%RandomizeSlider.value = value
 	vpainter.brush_random = value
 
