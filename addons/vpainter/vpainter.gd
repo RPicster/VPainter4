@@ -94,11 +94,9 @@ func _user_input(event) -> bool:
 		if event.is_pressed():
 			process_drawing = true
 			_process_drawing()
-			brush_cursor.mesh.material = preload("res://addons/VPainter/res/brush_cursor/MTL_BrushCursor_painting.tres")
 			return true
 		else:
 			process_drawing = false
-			brush_cursor.mesh.material = preload("res://addons/VPainter/res/brush_cursor/MTL_BrushCursor.tres")
 			_set_collision()
 			return false
 	
@@ -123,7 +121,8 @@ func _display_brush() -> void:
 		brush_cursor.visible = true
 		brush_cursor.position = hit_position
 		brush_cursor.scale = Vector3.ONE * calculated_size
-		brush_cursor.transparency = remap(brush_opacity, 0.0, 1.0, 0.9, 0.3)
+		var draw_mod = 0.6 if process_drawing else 0.0
+		brush_cursor.transparency = min(remap(brush_opacity, 0.0, 1.0, 0.9, 0.3)+draw_mod, 0.9)
 	else:
 		brush_cursor.visible = false
 
