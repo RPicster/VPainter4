@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://o2o5o4oiself"]
 
 [ext_resource type="Material" uid="uid://bafxd482cytk4" path="res://addons/vpainter/res/brush_cursor/MTL_BrushCursor_mat.tres" id="1_gtcsu"]
-[ext_resource type="Material" path="res://addons/VPainter/res/brush_cursor/MTL_BrushCursor.tres" id="1_x77hk"]
+[ext_resource type="Material" path="res://addons/vpainter/res/brush_cursor/MTL_BrushCursor.tres" id="1_x77hk"]
 
 [sub_resource type="SphereMesh" id="2"]
 material = ExtResource("1_x77hk")
