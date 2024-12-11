@@ -142,8 +142,8 @@ func _calculate_brush_pressure(event) -> void:
 func _raycast(camera:Node, event:InputEvent) -> void:
 	if event is InputEventMouse:
 		#RAYCAST FROM CAMERA:
-		var ray_origin = camera.project_ray_origin(event.position)
-		var ray_dir = camera.project_ray_normal(event.position)
+		var ray_origin = camera.project_ray_origin(camera.get_viewport().get_mouse_position())
+		var ray_dir = camera.project_ray_normal(camera.get_viewport().get_mouse_position())
 		var ray_distance = camera.far
 
 		var space_state =  get_viewport().world_3d.direct_space_state
@@ -151,7 +151,7 @@ func _raycast(camera:Node, event:InputEvent) -> void:
 		p.from = ray_origin
 		p.to = ray_origin + ray_dir * ray_distance
 		p.collision_mask = 524288
-		var hit = space_state.intersect_ray(p)#ray_origin, ray_origin + ray_dir * ray_distance, [] , 524288 , true, false)
+		var hit = space_state.intersect_ray(p)
 		#IF RAYCAST HITS A DRAWABLE SURFACE:
 		if hit.size() == 0:
 			raycast_hit = false
@@ -299,7 +299,11 @@ func _set_edit_mode(value) -> void:
 
 
 func _make_local_copy() -> void:
-	current_mesh.mesh = current_mesh.mesh.duplicate(false)
+	var surface_tool := SurfaceTool.new()
+	surface_tool.create_from(current_mesh.mesh.duplicate(false), 0)
+	var array_mesh := surface_tool.commit()
+	surface_tool.generate_tangents()
+	current_mesh.mesh = array_mesh
 
 
 func _convert_to_mesh() -> void:
@@ -371,7 +375,6 @@ func _enter_tree():
 	
 	#SELECTION SIGNAL:
 	EditorInterface.get_selection().selection_changed.connect(_selection_changed)
-	#get_editor_interface().get_selection().connect("selection_changed", self._selection_changed)
 	
 	#LOAD BRUSH:
 	brush_cursor = preload("res://addons/vpainter/res/brush_cursor/BrushCursor.tscn").instantiate()
