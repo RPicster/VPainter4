@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=4 uid="uid://cx66eqs2rksxk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0t6s"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_m4ms8"]
+_surfaces = [{
+"aabb": AABB(-5, -5, 0, 10, 10, 1e-05),
+"attribute_data": PackedByteArray("/6UG/wAAgD8AAIA//48R/wAAAAAAAIA//1Ml/wAAgD8AAAAAEQAA/wAAAAAAAAAA"),
+"format": 34359742495,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAQADAAIA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AACgQAAAoMAAAAAAAACgwAAAoMAAAAAAAACgQAAAoEAAAAAAAACgwAAAoEAAAAAA/3//f////7//f/9/////v/9//3////+//3//f////78=")
+}]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_f0t6s")
+mesh = SubResource("ArrayMesh_m4ms8")

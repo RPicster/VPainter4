@@ -13,5 +13,5 @@ void fragment() {
 	float n = dot(NORMAL, VIEW);
 	float edge = pow(1.0 - n, 4.0);
 	ALBEDO = clamp(albedo.rgb * texture(albedo_tex, vec2(edge)).rgb - prox, -0.5, 1.0);
-	ALPHA *= clamp(max(edge, prox*0.5), 0.0, 1.0)*albedo.a;
+	ALPHA *= clamp(max(edge, prox*0.5), 0.00, 1.0) * clamp(albedo.a + edge, 0.0, 1.0);
 }

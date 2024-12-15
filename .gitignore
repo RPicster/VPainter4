@@ -2,10 +2,5 @@ testing/**
 example/**
 .import/**
 *.import
-default_env.tres
-icon.png
-icon.svg
-project.godot
-
 *.obj
-
+.godot

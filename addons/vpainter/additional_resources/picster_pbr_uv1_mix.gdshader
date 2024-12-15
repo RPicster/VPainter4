@@ -113,30 +113,30 @@ void fragment() {
 	vec3 m2 = texture(texture_height_r, uv_r).rgb;
 	vec3 m3 = texture(texture_height_g, uv_g).rgb;
 	vec3 m4 = texture(texture_height_b, uv_b).rgb;
-	
+
 	vec3 a1 = texture(texture_albedo_base, uv_base).rgb * albedo_base.rgb;
 	vec3 a2 = texture(texture_albedo_r, uv_r).rgb * albedo_r.rgb;
 	vec3 a3 = texture(texture_albedo_g, uv_g).rgb * albedo_g.rgb;
 	vec3 a4 = texture(texture_albedo_b, uv_b).rgb * albedo_b.rgb;
-	
+
 	vec3 r1 = texture(texture_roughness_base, uv_base).rgb;
 	vec3 r2 = texture(texture_roughness_r, uv_r).rgb;
 	vec3 r3 = texture(texture_roughness_g, uv_g).rgb;
 	vec3 r4 = texture(texture_roughness_b, uv_b).rgb;
-	
+
 	vec3 n1 = texture(texture_normal_base, uv_base).rgb;
 	vec3 n2 = texture(texture_normal_r, uv_r).rgb;
 	vec3 n3 = texture(texture_normal_g, uv_g).rgb;
 	vec3 n4 = texture(texture_normal_b, uv_b).rgb;
-	
+
 	vec3 m_blend1 = heightlerp(m1.rgb, m1.r, m2.rgb, m2.r, blend_softness1, COLOR.r);
 	vec3 m_blend2 = heightlerp(m_blend1.rgb, m_blend1.r, m3.rgb, m3.r, blend_softness2, COLOR.g);
 	vec3 m_blend3 = heightlerp(m_blend2.rgb, m_blend2.r, m4.rgb, m4.r, blend_softness3, COLOR.b);
-	
+
 	vec3 r_blend = heightlerp(r1.rgb, m1.r, r2.rgb, m2.r, blend_softness1, COLOR.r);
 	r_blend = heightlerp(r_blend.rgb, m_blend1.r, r3.rgb, m3.r, blend_softness2, COLOR.g);
 	r_blend = heightlerp(r_blend.rgb, m_blend2.r, r4.rgb, m4.r, blend_softness3, COLOR.b);
-	
+
 	vec3 a_blend = heightlerp(a1.rgb, m1.r, a2.rgb, m2.r, blend_softness1, COLOR.r);
 	a_blend = heightlerp(a_blend.rgb, m_blend1.r, a3.rgb, m3.r, blend_softness2, COLOR.g);
 	a_blend = heightlerp(a_blend.rgb, m_blend2.r, a4.rgb, m4.r, blend_softness3, COLOR.b);
@@ -144,15 +144,15 @@ void fragment() {
 	vec3 n_blend = heightlerp(n1.rgb, m1.r, n2.rgb, m2.r, blend_softness1, COLOR.r);
 	n_blend = heightlerp(n_blend.rgb, m_blend1.r, n3.rgb, m3.r, blend_softness2, COLOR.g);
 	n_blend = heightlerp(n_blend.rgb, m_blend2.r, n4.rgb, m4.r, blend_softness3, COLOR.b);
-	
+
 	float nd_blend = heightlerpf(normal_scale_base, m1.r, normal_scale_r, m2.r, blend_softness1, COLOR.r);
 	nd_blend = heightlerpf(nd_blend, m_blend1.r, normal_scale_g, m3.r, blend_softness2, COLOR.g);
 	nd_blend = heightlerpf(nd_blend, m_blend2.r, normal_scale_b, m4.r, blend_softness3, COLOR.b);
-	
+
 	float s_blend = heightlerpf(specular_base, m1.r, specular_r, m2.r, blend_softness1, COLOR.r);
 	s_blend = heightlerpf(s_blend, m_blend1.r, specular_g, m3.r, blend_softness2, COLOR.g);
 	s_blend = heightlerpf(s_blend, m_blend2.r, specular_b, m4.r, blend_softness3, COLOR.b);
-	
+
 	ALBEDO = a_blend.rgb;
 	NORMAL_MAP = n_blend.rgb;
 	vec3 roughness_texture_channel = vec3(1.0,0.0,0.0);
