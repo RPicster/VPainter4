@@ -6,6 +6,7 @@ You can use "show_r", "show_g" and "show_b" to isolate specific channels for pre
 ------------------------
 ------------------------*/
 shader_type spatial;
+render_mode wireframe;
 
 uniform bool show_r = true;
 uniform bool show_g = true;
@@ -28,5 +29,5 @@ void vertex(){
 
 void fragment(){
 	ALBEDO = col.rgb;
-
+	ALBEDO = vec3(0.0);
 }

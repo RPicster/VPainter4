@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj2wex8sw3t81"]
+
+[ext_resource type="Shader" path="res://addons/vpainter/res/vpainter_vertex_probe.gdshader" id="1_5bvtp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iff7b"]
+render_priority = 0
+shader = ExtResource("1_5bvtp")
+shader_parameter/outline_width = 0.7
+shader_parameter/base_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_f56kx"]
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 4
+
+[sub_resource type="MultiMesh" id="MultiMesh_dn430"]
+transform_format = 1
+use_colors = true
+use_custom_data = true
+instance_count = 16
+mesh = SubResource("SphereMesh_f56kx")
+buffer = PackedFloat32Array(1, 0, 0, 8, 0, 1, 0, 0, 0, 0, 1, 8, 0, 0, 0, 0.0666667, 0, 0, 0, 0, 1, 0, 0, 2.66667, 0, 1, 0, 0, 0, 0, 1, 8, 0, 0, 0, 0.890196, 0, 0, 0, 0, 1, 0, 0, -2.66667, 0, 1, 0, 0, 0, 0, 1, 8, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -8, 0, 1, 0, 0, 0, 0, 1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 8, 0, 1, 0, 0, 0, 0, 1, 2.66667, 0, 0, 0, 0.145098, 0, 0, 0, 0, 1, 0, 0, 2.66667, 0, 1, 0, 0, 0, 0, 1, 2.66667, 0, 1, 0, 0.733333, 0, 0, 0, 0, 1, 0, 0, -2.66667, 0, 1, 0, 0, 0, 0, 1, 2.66667, 0, 0.286275, 0, 0, 0, 0, 0, 0, 1, 0, 0, -8, 0, 1, 0, 0, 0, 0, 1, 2.66667, 0, 0, 0, 0.643137, 0, 0, 0, 0, 1, 0, 0, 8, 0, 1, 0, 0, 0, 0, 1, -2.66667, 0, 0, 0, 0.160784, 0, 0, 0, 0, 1, 0, 0, 2.66667, 0, 1, 0, 0, 0, 0, 1, -2.66667, 0.117647, 0.807843, 0, 0.807843, 0, 0, 0, 0, 1, 0, 0, -2.66667, 0, 1, 0, 0, 0, 0, 1, -2.66667, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, -8, 0, 1, 0, 0, 0, 0, 1, -2.66667, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 8, 0, 1, 0, 0, 0, 0, 1, -8, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2.66667, 0, 1, 0, 0, 0, 0, 1, -8, 0, 0, 0, 0.423529, 0, 0, 0, 0, 1, 0, 0, -2.66667, 0, 1, 0, 0, 0, 0, 1, -8, 0, 0, 0, 0.145098, 0, 0, 0, 0, 1, 0, 0, -8, 0, 1, 0, 0, 0, 0, 1, -8, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D"]
+material_override = SubResource("ShaderMaterial_iff7b")
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_dn430")

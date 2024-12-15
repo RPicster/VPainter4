@@ -32,6 +32,7 @@ func _enter_tree():
 	
 	
 	%DuplicateButton.button_down.connect(_make_local_copy)
+	%GridifyButton.button_down.connect(_gridify)
 	%PrimitiveToMeshButton.button_down.connect(_convert_to_mesh)
 	%ApplyPreviewMat.button_down.connect(_set_preview_material)
 	
@@ -62,6 +63,21 @@ func _make_local_copy():
 
 func _convert_to_mesh():
 	vpainter._convert_to_mesh()
+
+
+func _gridify():
+	var popup := preload("res://addons/vpainter/res/vpainter_subdivide_window.tscn").instantiate()
+	popup.close_requested.connect(popup.queue_free)
+	popup.exclusive = true
+	popup.get_node("%Cancel").pressed.connect(popup.queue_free)
+	popup.get_node("%Apply").pressed.connect(func():
+		var depth := int(popup.get_node("%Depth").value)
+		var width := int(popup.get_node("%Width").value)
+		vpainter._gridify(Vector2i(depth, width))
+		popup.queue_free()
+		)
+		
+	EditorInterface.popup_dialog_centered(popup)
 
 
 func _set_paint_color(value):
@@ -228,3 +244,6 @@ func show_blend_mode_settings(s:bool):
 	%BlendModeSeparator.visible = s
 	%BlendModesLabel.visible = s
 	%BlendModeContainer.visible = s
+
+func set_info(text) -> void:
+	%Info.text = str(text)

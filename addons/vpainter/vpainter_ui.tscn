@@ -1,33 +1,31 @@
 [gd_scene load_steps=13 format=3 uid="uid://6xvarlmj2wkk"]
 
 [ext_resource type="Script" path="res://addons/vpainter/vpainter_ui.gd" id="1_mjjor"]
-[ext_resource type="Texture2D" uid="uid://duanqmgnxdcv4" path="res://addons/vpainter/res/icons/icon_fill.svg" id="2"]
-[ext_resource type="Texture2D" uid="uid://cfmd6uoamd8f7" path="res://addons/vpainter/res/icons/icon_blur.svg" id="3"]
-[ext_resource type="Texture2D" uid="uid://xoorvy12mjeq" path="res://addons/vpainter/res/icons/icon_brush.svg" id="4"]
-[ext_resource type="Texture2D" uid="uid://bcv33tjiro5ae" path="res://addons/vpainter/res/icons/icon_pick.svg" id="5"]
-[ext_resource type="Texture2D" uid="uid://bdghfff4yr7ov" path="res://addons/vpainter/res/icons/icon_displace.svg" id="6"]
+[ext_resource type="Texture2D" uid="uid://grm61f1nxvnv" path="res://addons/vpainter/res/icons/icon_fill.svg" id="2"]
+[ext_resource type="Texture2D" uid="uid://cgy6xtxjo3i8q" path="res://addons/vpainter/res/icons/icon_blur.svg" id="3"]
+[ext_resource type="Texture2D" uid="uid://b0jhh1ymiipip" path="res://addons/vpainter/res/icons/icon_brush.svg" id="4"]
+[ext_resource type="Texture2D" uid="uid://dbqqvcjbf3isy" path="res://addons/vpainter/res/icons/icon_pick.svg" id="5"]
+[ext_resource type="Texture2D" uid="uid://b8ipqo1b32x80" path="res://addons/vpainter/res/icons/icon_displace.svg" id="6"]
 [ext_resource type="StyleBox" uid="uid://c3cpe2uf4xf13" path="res://addons/vpainter/vpainter_colorbox_style.tres" id="7_fgre5"]
-[ext_resource type="Texture2D" uid="uid://bj1ijgxgv86ct" path="res://addons/vpainter/res/icons/icon_flip.svg" id="7_fwiam"]
+[ext_resource type="Texture2D" uid="uid://cjdhexqbc7jqd" path="res://addons/vpainter/res/icons/icon_flip.svg" id="7_fwiam"]
 [ext_resource type="StyleBox" uid="uid://8cmidpul6ghq" path="res://addons/vpainter/vpainter_mode_button_pressed_style.tres" id="8_2rexh"]
-[ext_resource type="Texture2D" uid="uid://wft6u73g5s7n" path="res://addons/vpainter/res/icons/icon_make_mesh.svg" id="9_8amgy"]
-[ext_resource type="Texture2D" uid="uid://c5sdq0sls61ji" path="res://addons/vpainter/res/icons/icon_duplicate.svg" id="10"]
-[ext_resource type="Texture2D" uid="uid://cbwemoa53sx4x" path="res://addons/vpainter/res/icons/icon_preview.svg" id="11_6f4dc"]
+[ext_resource type="Texture2D" uid="uid://djphhh1fxtn52" path="res://addons/vpainter/res/icons/icon_make_mesh.svg" id="9_8amgy"]
+[ext_resource type="Texture2D" uid="uid://lobmpq2mptjw" path="res://addons/vpainter/res/icons/icon_duplicate.svg" id="10"]
+[ext_resource type="Texture2D" uid="uid://d0xngiqedhcvb" path="res://addons/vpainter/res/icons/icon_preview.svg" id="11_6f4dc"]
 
-[node name="ui" type="Control"]
+[node name="ui" type="MarginContainer"]
 custom_minimum_size = Vector2(176, 0)
-layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_top = -216.0
-offset_right = 166.0
+offset_right = 176.0
 offset_bottom = -205.0
 grow_vertical = 2
+size_flags_horizontal = 0
 script = ExtResource("1_mjjor")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-offset_right = 176.0
-offset_bottom = 659.0
 
 [node name="MainArea" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true
@@ -116,11 +114,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 32)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_styles/normal = ExtResource("7_fgre5")
-theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/hover = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 flat = true
 
 [node name="Label" type="Label" parent="MarginContainer/MainArea/HBoxContainer/ColorSwatches"]
@@ -132,11 +130,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 32)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_styles/normal = ExtResource("7_fgre5")
-theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/hover = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
+theme_override_styles/hover = ExtResource("7_fgre5")
+theme_override_styles/pressed = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 flat = true
 color = Color(1, 1, 1, 1)
 
@@ -159,11 +157,11 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Shortcut: '5'"
-theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/hover = ExtResource("7_fgre5")
 theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
-theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 
 [node name="PresetBlack" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
 unique_name_in_owner = true
@@ -171,11 +169,11 @@ modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Shortcut: '4'"
-theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/hover = ExtResource("7_fgre5")
 theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
-theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 
 [node name="PresetRed" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
 unique_name_in_owner = true
@@ -183,11 +181,11 @@ modulate = Color(1, 0, 0, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Shortcut: '1'"
-theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/hover = ExtResource("7_fgre5")
 theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
-theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 
 [node name="PresetGreen" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
 unique_name_in_owner = true
@@ -195,11 +193,11 @@ modulate = Color(0, 1, 0, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Shortcut: '2'"
-theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/hover = ExtResource("7_fgre5")
 theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
-theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 
 [node name="PresetBlue" type="Button" parent="MarginContainer/MainArea/ColorPresetsContainer"]
 unique_name_in_owner = true
@@ -207,11 +205,11 @@ modulate = Color(0, 0, 1, 1)
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "Shortcut: '3'"
-theme_override_styles/normal = ExtResource("7_fgre5")
+theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/disabled = ExtResource("7_fgre5")
 theme_override_styles/hover = ExtResource("7_fgre5")
 theme_override_styles/pressed = ExtResource("7_fgre5")
-theme_override_styles/disabled = ExtResource("7_fgre5")
-theme_override_styles/focus = ExtResource("7_fgre5")
+theme_override_styles/normal = ExtResource("7_fgre5")
 
 [node name="BlendModeSeparator" type="HSeparator" parent="MarginContainer/MainArea"]
 unique_name_in_owner = true
@@ -385,6 +383,14 @@ text = "Duplicate Mesh"
 icon = ExtResource("10")
 metadata/_edit_layout_mode = 1
 
+[node name="GridifyButton" type="Button" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Subdivide the mesh. Only good for flat planes."
+text = "Subdivide Mesh"
+icon = ExtResource("9_8amgy")
+metadata/_edit_layout_mode = 1
+
 [node name="ApplyPreviewMat" type="Button" parent="MarginContainer/MainArea"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -393,13 +399,23 @@ text = "Preview Mat"
 icon = ExtResource("11_6f4dc")
 metadata/_edit_layout_mode = 1
 
+[node name="Info" type="RichTextLabel" parent="MarginContainer/MainArea"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
 [node name="Label2" type="Label" parent="MarginContainer/MainArea"]
 layout_mode = 2
+size_flags_vertical = 10
 theme_override_font_sizes/font_size = 12
 text = "Shortcuts:
 X: flip colors
 D: reset to black and white
-1-5: preset colors"
+1-5: preset colors
+S + Mouse UP: Brush Opacity
+S + Mouse LEFT: Brush Size"
 
 [node name="ConversionTool" type="VBoxContainer" parent="MarginContainer"]
 unique_name_in_owner = true

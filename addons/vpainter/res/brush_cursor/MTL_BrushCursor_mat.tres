@@ -1,10 +1,11 @@
 [gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://bafxd482cytk4"]
 
-[ext_resource type="Shader" path="res://addons/vpainter/res/brush_cursor/vpainter4_brush_cursor.gdshader" id="1_868eh"]
+[ext_resource type="Shader" path="res://addons/vpainter/res/brush_cursor/vpainter_brush_cursor.gdshader" id="1_868eh"]
 
 [sub_resource type="Gradient" id="Gradient_0bbhp"]
-offsets = PackedFloat32Array(0.163009, 0.244514, 0.319749, 0.507837)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.137931, 0.197044, 0.408867)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_b670r"]
 gradient = SubResource("Gradient_0bbhp")
@@ -12,5 +13,5 @@ gradient = SubResource("Gradient_0bbhp")
 [resource]
 render_priority = 0
 shader = ExtResource("1_868eh")
-shader_parameter/albedo = Color(0.121569, 0.819608, 1, 1)
+shader_parameter/albedo = Color(0, 0, 0, 1)
 shader_parameter/albedo_tex = SubResource("GradientTexture1D_b670r")
